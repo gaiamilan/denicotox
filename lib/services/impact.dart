@@ -81,7 +81,7 @@ Future<void> clearTokens() async{
 
 
   //This method allows to obtain the JWT token pair from IMPACT and store it in SharedPreferences
-   Future<dynamic> fetchStepData(String day) async {
+   Future<dynamic> fetchStepData(DateTime date) async {
 
     //Get the stored access token (Note that this code does not work if the tokens are null)
     final sp = await SharedPreferences.getInstance();
@@ -92,9 +92,10 @@ Future<void> clearTokens() async{
       await refreshTokens();
       access = sp.getString('access');
     }//if
+    String formattedDate = DateFormat('yyyy-MM-dd').format(date);
 
     //Create the (representative) request
-    final url = '${Impact.baseUrl}${Impact.stepsEndpoint}${Impact.patientUsername}/day/$day/';
+    final url = '${Impact.baseUrl}${Impact.stepsEndpoint}${Impact.patientUsername}/day/$formattedDate/';
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
     //Get the response
@@ -135,6 +136,8 @@ Future<void> clearTokens() async{
     
     //if OK parse the response, otherwise return null
     var result;
+    print('HR');
+    print(response.statusCode);
     if (response.statusCode == 200) {
       result = jsonDecode(response.body);
     } //if
@@ -168,6 +171,7 @@ Future<void> clearTokens() async{
     
     //if OK parse the response, otherwise return null
     var result;
+    print(response.statusCode);
     if (response.statusCode == 200) {
       result = jsonDecode(response.body);
     } //if

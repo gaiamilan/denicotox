@@ -1,6 +1,6 @@
-import 'package:denicotox/screens/homePage.dart';
+//import 'package:denicotox/screens/homePage.dart';
 import 'package:flutter/material.dart';
-//import 'package:denicotox/screens/splash.dart';
+import 'package:denicotox/screens/splash.dart';
 import 'package:denicotox/providers/data_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -11,6 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox<int>('counter'); // crea/apre il box
+  await Hive.openBox<int>('totalSteps'); // crea/apre il box
 
   runApp(MyApp());
 }
@@ -28,8 +29,8 @@ class MyApp extends StatelessWidget {
         //This specifies the entrypoint
         home: 
         
-        //Splash(),
-        Homepage(),
+        Splash(),
+        //Homepage(),
         ),
 
       );

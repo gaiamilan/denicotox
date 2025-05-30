@@ -6,7 +6,7 @@ import 'package:denicotox/services/impact.dart';
 
 class DataProvider extends ChangeNotifier {
  //DateTime currentDate = DateTime.now();
- DateTime currentDate = DateTime.now().subtract(Duration(days: 7));
+
 
   //This serves as database of the application
   List<StepData> stepData = [];
@@ -15,6 +15,8 @@ class DataProvider extends ChangeNotifier {
   List<int> valueHR = [];
   List<RestingHeartRateData> restingHeartRateData = [];
   final impactInstance = Impact();
+
+/*
 
   DataProvider() {
     // upon creation we get the data of today
@@ -25,15 +27,17 @@ class DataProvider extends ChangeNotifier {
   bool get loading {
     return heartRateData.isEmpty || restingHeartRateData.isEmpty ;
   }
+*/
 
-  void getDataOfDay(DateTime date) {
+ Future<void> getDataOfDay(DateTime date) async{
     // reset the values to show loading animation
-    _loading();
-    currentDate = date; // Update the current date
+   _loading();
     // heartRates = await getHeartRateData(date);
-    fetchHRData(date);
-    fetchRestingHRData(date);
+    await fetchHRData(date);
+    await fetchRestingHRData(date);
+    await fetchStepData(date);
     print('New data fetched for date: $date');
+  
     notifyListeners();
   }
 
@@ -44,13 +48,11 @@ class DataProvider extends ChangeNotifier {
   }
 
 
-
   //Method to fetch step data from the server
-  void fetchStepData(String day) async {
+  Future<void> fetchStepData(DateTime date) async {
 
     //Get the response
-    final impactInstance = Impact();
-    final data = await impactInstance.fetchStepData(day);
+    final data = await impactInstance.fetchStepData(date);
 
     //if OK parse the response adding all the elements to the list, otherwise do nothing
     if (data != null) {
@@ -68,7 +70,7 @@ class DataProvider extends ChangeNotifier {
 
 
   //Method to fetch heart rate data from the server
-  void fetchHRData(DateTime date) async {
+  Future<void> fetchHRData(DateTime date) async {
     //Get the response
     final data = await impactInstance.fetcHRData(date);
 
@@ -87,7 +89,7 @@ class DataProvider extends ChangeNotifier {
   }//fetchStepData
 
  //Method to fetch resting heart rate data from the server
-  void fetchRestingHRData(DateTime date) async {
+  Future<void> fetchRestingHRData(DateTime date) async {
     //Get the response
     final data = await impactInstance.fetcRestingHRData(date);
 
@@ -96,7 +98,6 @@ class DataProvider extends ChangeNotifier {
       restingHeartRateData.add(
             RestingHeartRateData.fromJson(data['data']['date'], data['data']['data']));
       } //for
-
       //remember to notify the listeners
       notifyListeners();
 
@@ -115,9 +116,11 @@ List stars = [] ;
   //Method to use to add a star.
 void addStar(int toAdd) {
 stars.add(toAdd);
+print('?');
     //Call the notifyListeners() method to alert that something happened.
     notifyListeners();
   }//addStar
+
 
   //Method to use to delete a star
   void deleteStar(int index){

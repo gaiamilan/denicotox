@@ -1,4 +1,5 @@
 
+import 'package:denicotox/widgets/totalstep.dart';
 import 'package:denicotox/widgets/tree.dart';
 import 'package:flutter/material.dart';
 import 'package:denicotox/providers/data_provider.dart';
@@ -21,8 +22,8 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  final DataProvider star = DataProvider();
   late Box<int> counterBox; //DATABASE
+  late Box<int> totalStepsBox; //DATABASE
 
   // This widget is the root of your application.
   Map data = {};
@@ -39,10 +40,14 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     super.initState();
     dataExtraction(); // Chiama la funzione al momento giusto
-      counterBox = Hive.box<int>('counter'); 
-
+    counterBox = Hive.box<int>('counter'); 
+    totalStepsBox = Hive.box<int>('totalsteps'); //DATABASE
   }
-
+//RESET COUNTER OF DATABASE
+void _resetCounter() {
+  counterBox.put('counter', 0);
+  setState(() {});
+}
 
   @override
   Widget build(BuildContext context) {
@@ -96,62 +101,76 @@ class _HomepageState extends State<Homepage> {
         ),
       ),
    
-      body: Center(
-        child: Consumer<DataProvider>(
-          builder: (context, star, child) {
-          int count = star.stars.length;  
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+      body: Consumer<DataProvider>(
+        builder: (context, data, child) {
+           int totalSteps = calculateTotalSteps(data.stepData);
+           /*
+          int currentSteps = counterBox.get('counter', defaultValue: 0) ?? 0;
+            counterBox.put('counter', currentSteps+totalStepsofDay); //aggiorno database  
+          int totalSteps = totalStepsBox.get('totalsteps', defaultValue: 0) ?? 0; //DATABASE
+          */
+           int count = counterBox.get('counter', defaultValue: 0) ?? 0; //DATABASE 
+          //final count = counterBox.get('counter')!;            
+          return Center(
+            child: 
+               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+               TreeGrowthScreen(count: count, totalSteps: totalSteps),
+               Text('🌱 $count        👣 $totalSteps', style: TextStyle(fontSize: 30),),
+                SizedBox(height: 30),
+                StressGraph(heartRateData: data.heartRateData, restingHeartRateData: data.restingHeartRateData),
+                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(onPressed: (){
+                      _resetCounter() ;
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => CigarettePage()));},
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(), // <-- Circle shape
+                      padding: EdgeInsets.all(15), // <-- Button padding
+                    ),
+                    child:
+                     Icon(Icons.smoking_rooms_rounded , size: 50, color: const Color.fromARGB(255, 62, 61, 61), ),
+                  ),
+                   
+                   SizedBox(width: 180,height: 10),
+          
+                    ElevatedButton(onPressed:()async { 
+                      final star = Provider.of<DataProvider>(context, listen: false);
 
-            children: [
-                      Consumer<DataProvider>(builder: (context, data, child) {
-      return TreeGrowthScreen(count: count);
-    }),
-    
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CigarettePage()));},
-                style: ElevatedButton.styleFrom(
-                  shape: CircleBorder(), // <-- Circle shape
-                  padding: EdgeInsets.all(15), // <-- Button padding
+                      star.addStar(1);
+                    int current = counterBox.get('counter', defaultValue: 0) ?? 0;
+                     counterBox.put('counter', current+1); //aggiorno database                        
+                     },
+                    
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(), // <-- Circle shape
+                      padding: EdgeInsets.all(15), // <-- Button padding
+                    ),
+                    child: Icon(FontAwesomeIcons.leaf, size: 50, color:  const Color.fromARGB(255, 61, 170, 53)),
+                    ),
+                  ],
                 ),
-                child:
-                 Icon(Icons.smoking_rooms_rounded , size: 50, color: const Color.fromARGB(255, 62, 61, 61), ),
-              ),
-               
-               SizedBox(width: 180,height: 10),
-
-                ElevatedButton(onPressed:()async { 
-                  star.addStar(1);
-                int current = counterBox.get('counter', defaultValue: 0) ?? 0;
-                 counterBox.put('counter', current + 1); //aggiorno database   
-                  
-                 },
+               SizedBox(width: 100, height: 50),
+          
+                ],
                 
-                style: ElevatedButton.styleFrom(
-                  shape: CircleBorder(), // <-- Circle shape
-                  padding: EdgeInsets.all(15), // <-- Button padding
-                ),
-                child: Icon(FontAwesomeIcons.leaf, size: 50, color:  const Color.fromARGB(255, 61, 170, 53)),
-                ),
-              ],
-            ),
-           SizedBox(width: 100, height: 50),
-
-            ],
-            
+              )
+              
+          
           );
-          }
-      ),
+        },
       ),
     );
   }
 
 
-
-
-
 }
+
+
+
+
+
+
