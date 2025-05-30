@@ -8,7 +8,7 @@ import 'package:denicotox/screens/cigarettePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';  
 import 'package:denicotox/screens/historypage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-//import 'package:denicotox/widgets/stress_graph.dart';
+import 'package:denicotox/widgets/stress_graph.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
