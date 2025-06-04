@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:denicotox/screens/loginPage.dart';
 import 'package:denicotox/screens/homePage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:denicotox/services/impact.dart';
 import 'package:denicotox/providers/data_provider.dart';
 import 'package:provider/provider.dart';
@@ -18,23 +17,21 @@ class Splash extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'DENICOTOX', 
-                  style: GoogleFonts.fredoka(
-                    fontSize: 45,
-                    color: Colors.black,
-                  )
+                SizedBox(
+              width: 1000,
+              height: 100,
+              child: Image.asset('assets/Denicotox.png'),
+            ),
+
+                SizedBox(
+                  height: 30
                 ),
 
                 SizedBox(
-                  height: 40
-                ),
-
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/logo.png'),
-                  radius: 90,
-                  backgroundColor: Colors.transparent,
-                ),
+              width: 200,
+              height: 200,
+              child: Image.asset('assets/logo.png'),
+            ),
                 ]
         )));
   }
@@ -42,7 +39,7 @@ class Splash extends StatelessWidget {
   //Method for navigation SplashPage -> ExposurePage
   Future<void> _toHomePage(BuildContext context) async {
       final provider = Provider.of<DataProvider>(context, listen: false);
-      DateTime currentDate = DateTime.now().subtract(Duration(days: 5));
+      DateTime currentDate = DateTime.now().subtract(Duration(days: 4));
       await provider.getDataOfDay(currentDate);
   
 
@@ -51,7 +48,7 @@ class Splash extends StatelessWidget {
   } 
 
   // Method for navigation SplashPage -> LoginPage
-  void _toLoginPage(BuildContext context) {
+  void _toLoginPage(BuildContext context) async {
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: ((context) => LoginPage())));
   } 

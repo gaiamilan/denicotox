@@ -1,6 +1,7 @@
+import 'package:denicotox/screens/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:denicotox/screens/homepage.dart';
+//import 'package:denicotox/screens/homepage.dart';
 
 class Module extends StatefulWidget {
   const Module({super.key});
@@ -68,7 +69,6 @@ class _ModuleState extends State<Module> {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
 
               // Quanti anni hai?
               TextFormField(
@@ -93,12 +93,32 @@ class _ModuleState extends State<Module> {
               SizedBox(height: 16),
 
               // Che tipo di sigarette fumi?
-              TextFormField(
-                decoration:
-                    InputDecoration(labelText: 'Che tipo di sigarette fumi?'),
-                onSaved: (value) => _cigaretteType = value,
-              ),
-              SizedBox(height: 16),
+
+              
+              Text('Che tipo di sigarette fumi?'),
+              Column(
+  children: [
+    RadioListTile<String>(
+      title: Text('Tabacco con combustione'),
+      value: 'Tabacco con combustione',
+      groupValue: _cigaretteType,
+      onChanged: (value) => setState(() => _cigaretteType = value),
+    ),
+    RadioListTile<String>(
+      title: Text('Tabacco riscaldato'),
+      value: 'Tabacco riscaldato',
+      groupValue: _cigaretteType,
+      onChanged: (value) => setState(() => _cigaretteType = value),
+    ),
+    RadioListTile<String>(
+      title: Text('Sigaretta elettronica'),
+      value: 'Sigaretta elettronica',
+      groupValue: _cigaretteType,
+      onChanged: (value) => setState(() => _cigaretteType = value),
+    ),
+  ],
+),
+
 
               // Cosa ti ha spinto a smettere?
               TextFormField(
@@ -130,7 +150,6 @@ class _ModuleState extends State<Module> {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
 
               ElevatedButton(
                 onPressed: () async{
@@ -155,7 +174,7 @@ class _ModuleState extends State<Module> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Homepage(),
+                        builder: (context) => LoginPage(),
                       ),
                     );
                   }

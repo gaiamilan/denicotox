@@ -3,6 +3,7 @@ import 'package:denicotox/models/heartratedata.dart';
 import 'package:denicotox/models/stepdata.dart'; 
 import 'package:denicotox/models/restingheartrate.dart';
 import 'package:denicotox/services/impact.dart';
+import 'dart:math';
 
 class DataProvider extends ChangeNotifier {
  //DateTime currentDate = DateTime.now();
@@ -15,6 +16,8 @@ class DataProvider extends ChangeNotifier {
   List<int> valueHR = [];
   List<RestingHeartRateData> restingHeartRateData = [];
   final impactInstance = Impact();
+  int voucherEvidenziatoIndex = 0; // Define the voucherEvidenziatoIndex variable
+
 
 /*
 
@@ -120,7 +123,11 @@ print('?');
     //Call the notifyListeners() method to alert that something happened.
     notifyListeners();
   }//addStar
-
+void update(){
+  //This method can be used to update the data provider
+  //for example after a change in the database.
+  notifyListeners();
+}
 
   //Method to use to delete a star
   void deleteStar(int index){
@@ -130,5 +137,10 @@ print('?');
     notifyListeners();
   }//deleteStar
   
-  
-}//DataProvider
+
+  void scegliVoucherCasuale(int max) {
+    final random = Random();
+    voucherEvidenziatoIndex = random.nextInt(max);
+    notifyListeners();
+  }
+}

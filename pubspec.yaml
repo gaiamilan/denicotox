@@ -90,7 +90,11 @@ flutter:
   - assets/3.png
   - assets/4.png    
   - assets/5.png    
-  - assets/6.png    
+  - assets/6.png  
+  - assets/treedom.png  
+  - assets/voucher0.png
+  - assets/Denicotox.png
+
 
   
   # An image asset can refer to one or more resolution-specific "variants", see

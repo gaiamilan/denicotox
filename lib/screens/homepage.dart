@@ -23,7 +23,6 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   late Box<int> counterBox; //DATABASE
-  late Box<int> totalStepsBox; //DATABASE
 
   // This widget is the root of your application.
   Map data = {};
@@ -41,13 +40,67 @@ class _HomepageState extends State<Homepage> {
     super.initState();
     dataExtraction(); // Chiama la funzione al momento giusto
     counterBox = Hive.box<int>('counter'); 
-    totalStepsBox = Hive.box<int>('totalsteps'); //DATABASE
   }
 //RESET COUNTER OF DATABASE
 void _resetCounter() {
   counterBox.put('counter', 0);
   setState(() {});
 }
+
+void check( count, totalSteps ) async {
+  if (count >= 30 && totalSteps >= 8000) {
+    
+    showDialog(
+      context: context,
+      builder: (BuildContext context)  {
+        return AlertDialog(
+          title: Text("Complimenti! \n Hai raggiunto un traguardo! \n Hai sbloccato un albero Treedom!", 
+          textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
+          content: Image(image: AssetImage('assets/treedom.png'), width: 300, height: 100),
+          actions: [
+            TextButton(
+              onPressed: () {
+              Provider.of<DataProvider>(context, listen: false).scegliVoucherCasuale(10);                
+              Navigator.of(context).pop(); // Chiude il popup
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+    await Future.delayed(Duration(seconds: 5));
+    _resetCounter();
+    final dataProvider = Provider.of<DataProvider>(context, listen: false);
+    dataProvider.update();
+  }
+  else if (count == 15) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context)  {
+        return AlertDialog(
+          title: Text("Complimenti! \n Hai raggiunto un traguardo! \n Hai sbloccato un voucher!", 
+          textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
+          content: Image(image: AssetImage('assets/voucher0.png'), width: 500, height: 300),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Chiude il popup
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+    await Future.delayed(Duration(seconds: 5));
+    final dataProvider = Provider.of<DataProvider>(context, listen: false);
+    dataProvider.update();
+
+
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -102,22 +155,17 @@ void _resetCounter() {
       ),
    
       body: Consumer<DataProvider>(
-        builder: (context, data, child) {
-           int totalSteps = calculateTotalSteps(data.stepData);
-           /*
-          int currentSteps = counterBox.get('counter', defaultValue: 0) ?? 0;
-            counterBox.put('counter', currentSteps+totalStepsofDay); //aggiorno database  
-          int totalSteps = totalStepsBox.get('totalsteps', defaultValue: 0) ?? 0; //DATABASE
-          */
-           int count = counterBox.get('counter', defaultValue: 0) ?? 0; //DATABASE 
+        builder: (context, data, child)  {
+           int totalStepsofDay = calculateTotalSteps(data.stepData);
+           int count = counterBox.get('counter', defaultValue: 0)!; //DATABASE 
           //final count = counterBox.get('counter')!;            
           return Center(
             child: 
                Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-               TreeGrowthScreen(count: count, totalSteps: totalSteps),
-               Text('🌱 $count        👣 $totalSteps', style: TextStyle(fontSize: 30),),
+               TreeGrowthScreen(count: count, totalSteps: totalStepsofDay),
+
                 SizedBox(height: 30),
                 StressGraph(heartRateData: data.heartRateData, restingHeartRateData: data.restingHeartRateData),
                 SizedBox(height: 40),
@@ -142,7 +190,9 @@ void _resetCounter() {
 
                       star.addStar(1);
                     int current = counterBox.get('counter', defaultValue: 0) ?? 0;
-                     counterBox.put('counter', current+1); //aggiorno database                        
+                     counterBox.put('counter', current+1); //aggiorno database    
+                      int checkcount = counterBox.get('counter', defaultValue: 0) ?? 0; //aggiorno il contatore
+                     check(checkcount, totalStepsofDay); //check if reset is needed               
                      },
                     
                     style: ElevatedButton.styleFrom(
@@ -164,13 +214,5 @@ void _resetCounter() {
         },
       ),
     );
-  }
-
-
-}
-
-
-
-
-
-
+  
+}}

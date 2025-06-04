@@ -71,7 +71,7 @@ class _CigarettePageState extends State<CigarettePage> {
   }
 
   Future<void> _loadMotivationAndStartDelay() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 5));
     final sp = await SharedPreferences.getInstance();
     final String? savedMotivation = sp.getString('motivazione');
 
@@ -81,10 +81,8 @@ class _CigarettePageState extends State<CigarettePage> {
     });
   }
 
-  void _cambiaFrase() {
-    setState(() {
-      _frasimotivazionali = (_frasi..shuffle()).first; //doppio punto x mescolare le frasi e restituire la nuova lista mescolata
-    });
+  String? _cambiaFrase() {
+    return  _frasimotivazionali = (_frasi..shuffle()).first; //doppio punto x mescolare le frasi e restituire la nuova lista mescolata;
   }
 
   //salvare giorno x giorno le siga
@@ -131,7 +129,7 @@ class _CigarettePageState extends State<CigarettePage> {
           barRods: [
             BarChartRodData(
               toY: valore.toDouble(),
-              color: Colors.blue,
+              color: Colors.green,
               width: 20,
               borderRadius: BorderRadius.circular(4),
             ),
@@ -148,40 +146,59 @@ class _CigarettePageState extends State<CigarettePage> {
 @override
 Widget build(BuildContext context) {
   return Scaffold(
-    appBar: AppBar(title: Text('Hai fumato')),
+    appBar: AppBar(title: Text('Nooo...hai fumato :(')),
     body: Center(
       child: _showSadFace
-          ? Icon(Icons.sentiment_dissatisfied, size: 100, color: Colors.red)
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Ricordati perché stai smettendo...',
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(height: 20),
-                Text(
-                  _motivation,
-                  style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
-                  textAlign: TextAlign.center,
-                ),
-                if (_frasimotivazionali.isNotEmpty) ...[
-                  SizedBox(height: 40),
-                  Text(
-                    _frasimotivazionali,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green[700],
+          ? 
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.sentiment_dissatisfied, size: 100, color: Colors.red),
+                  SizedBox(height: 70),
+                  SizedBox(
+                    height: 100,
+                    width: 300,
+                    child: Text(
+                      _cambiaFrase()!,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green[700],
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ],
-                SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: _cambiaFrase,
-                  child: Text('Mostra frase motivazionale'),
-                ),
+            ],
+          )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 50),
+                Container(
+                  width: 360,
+                  height: 90,
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                    color: const Color.fromARGB(100, 74, 189, 80),
+                      borderRadius: BorderRadius.circular(20), // Angoli arrotondati di 20
+                  ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Ricordati perché stai smettendo...',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        SizedBox(height: 10),
+                                    Text(
+                    _motivation,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                                    ),
+                      ],
+                    ),
+                  ),
+                
+                
                 SizedBox(height: 50),
                 if (!_giaInseritoOggi) ...[
                   Text('Quante sigarette hai fumato oggi?'),
@@ -218,10 +235,10 @@ Widget build(BuildContext context) {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   )
                 ],
-                SizedBox(height: 50),
+                SizedBox(height: 100),
                 Text(
                   'Andamento ultimi 7 giorni',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(
                   height: 200,

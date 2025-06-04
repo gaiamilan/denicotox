@@ -1,4 +1,3 @@
-//import 'package:denicotox/screens/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:denicotox/screens/splash.dart';
 import 'package:denicotox/providers/data_provider.dart';
@@ -11,7 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox<int>('counter'); // crea/apre il box
-  await Hive.openBox<int>('totalSteps'); // crea/apre il box
+
 
   runApp(MyApp());
 }
@@ -30,7 +29,6 @@ class MyApp extends StatelessWidget {
         home: 
         
         Splash(),
-        //Homepage(),
         ),
 
       );
