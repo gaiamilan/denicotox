@@ -156,7 +156,7 @@ Widget build(BuildContext context) {
               Icon(Icons.sentiment_dissatisfied, size: 100, color: Colors.red),
                   SizedBox(height: 70),
                   SizedBox(
-                    height: 100,
+                    height: 300,
                     width: 300,
                     child: Text(
                       _cambiaFrase()!,

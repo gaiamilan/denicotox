@@ -3,7 +3,7 @@ import 'package:denicotox/models/heartratedata.dart';
 import 'package:denicotox/models/stepdata.dart'; 
 import 'package:denicotox/models/restingheartrate.dart';
 import 'package:denicotox/services/impact.dart';
-import 'dart:math';
+
 
 class DataProvider extends ChangeNotifier {
  //DateTime currentDate = DateTime.now();
@@ -19,18 +19,6 @@ class DataProvider extends ChangeNotifier {
   int voucherEvidenziatoIndex = 0; // Define the voucherEvidenziatoIndex variable
 
 
-/*
-
-  DataProvider() {
-    // upon creation we get the data of today
-    getDataOfDay(currentDate);
-  }
-
-  // if data is loading we should provide the user with some feedback in UI
-  bool get loading {
-    return heartRateData.isEmpty || restingHeartRateData.isEmpty ;
-  }
-*/
 
  Future<void> getDataOfDay(DateTime date) async{
     // reset the values to show loading animation
@@ -138,9 +126,7 @@ void update(){
   }//deleteStar
   
 
-  void scegliVoucherCasuale(int max) {
-    final random = Random();
-    voucherEvidenziatoIndex = random.nextInt(max);
-    notifyListeners();
-  }
 }
+
+
+

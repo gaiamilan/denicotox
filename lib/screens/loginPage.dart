@@ -90,7 +90,7 @@ class LoginPage extends StatelessWidget {
                       ));
                   } else {
               final provider = Provider.of<DataProvider>(context, listen: false);
-      DateTime currentDate = DateTime.now().subtract(Duration(days: 4));
+      DateTime currentDate = DateTime.now().subtract(Duration(days: 3));
       await provider.getDataOfDay(currentDate);
                     Navigator.pushReplacement(
                       context, 

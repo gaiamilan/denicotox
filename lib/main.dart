@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<DataProvider>(
       create: (context) => DataProvider(),
+      
       child: MaterialApp(
         
         //This specifies the entrypoint

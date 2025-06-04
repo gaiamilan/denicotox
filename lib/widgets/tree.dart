@@ -46,8 +46,8 @@ String getTreeImagePath() {
               AnimatedSwitcher(
                 duration: Duration(milliseconds: 500),
                 child: SizedBox(
-                  width: 350,
-                  height: 350,
+                  width: 400,
+                  height: 330,
                   child: Image.asset(
                   getTreeImagePath(),
                   key: ValueKey(getTreeImagePath()),
@@ -55,6 +55,7 @@ String getTreeImagePath() {
                   fit: BoxFit.contain,
                 ),)
               ),
+              SizedBox(height: 20),
             Text('🌱 $count        👣 $totalSteps', style: TextStyle(fontSize: 30),)
             ],
           );
