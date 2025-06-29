@@ -66,9 +66,9 @@ Color getStressColor(double value) {
   return const Color.fromARGB(255, 213, 77, 77);                 // rosso
 }
   String interpretStressScore(double data) {
-    if (data < 20) return "molto rilassato";
-    if (data < 40) return "rilassato";
-    if (data < 70) return "stressato";
-    return "altamente stressato!";
+    if (data < 20) return "really relaxed";
+    if (data < 40) return "relaxed";
+    if (data < 70) return "stressed";
+    return "very stressed!";
   }
 }

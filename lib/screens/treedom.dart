@@ -13,7 +13,7 @@ class TreedomPage extends StatefulWidget {
 class _TreedomPageState extends State<TreedomPage> {
    final List<String> voucherImages = List.generate(
     10,
-    (index) => 'assets/voucher_${index + 1}.jpeg',
+    (index) => 'assets/bonus${index + 1}.png',
   );
 
   List<int> evidenziatiIndices = [];

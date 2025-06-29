@@ -14,7 +14,7 @@ class TreeGrowthScreen extends StatelessWidget {
   final int goal4 = 30;
   final int goal5 = 40;
   final int goal41 = 8000;
-  final int goal51 = 16000; 
+  final int goal51 = 15000; 
 
 String getTreeImagePath() {
   if (count >= goal5 && totalSteps >= goal51) {

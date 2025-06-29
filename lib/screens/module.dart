@@ -29,7 +29,7 @@ class _ModuleState extends State<Module> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Modulo di Registrazione'),
+        title: Text('Registration module'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -40,29 +40,29 @@ class _ModuleState extends State<Module> {
             children: [
               // Come ti chiami?
               TextFormField(
-                decoration: InputDecoration(labelText: 'Come ti chiami?'),
+                decoration: InputDecoration(labelText: 'What is your name?'),
                 onSaved: (value) => _name = value,
                 validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obbligatorio' : null,
+                    value == null || value.isEmpty ? 'Required field' : null,
               ),
               SizedBox(height: 16),
 
               // Sesso (maschio/femmina)
-              Text('Sesso:'),
+              Text('Gender:'),
               Row(
                 children: [
                   Expanded(
                     child: RadioListTile<String>(
-                      title: Text('Maschio'),
-                      value: 'Maschio',
+                      title: Text('Male'),
+                      value: 'Male',
                       groupValue: _gender,
                       onChanged: (value) => setState(() => _gender = value),
                     ),
                   ),
                   Expanded(
                     child: RadioListTile<String>(
-                      title: Text('Femmina'),
-                      value: 'Femmina',
+                      title: Text('Female'),
+                      value: 'Female',
                       groupValue: _gender,
                       onChanged: (value) => setState(() => _gender = value),
                     ),
@@ -72,47 +72,47 @@ class _ModuleState extends State<Module> {
 
               // Quanti anni hai?
               TextFormField(
-                decoration: InputDecoration(labelText: 'Quanti anni hai?'),
+                decoration: InputDecoration(labelText: 'How old are you?'),
                 keyboardType: TextInputType.number,
                 onSaved: (value) => _age = int.tryParse(value ?? ''),
                 validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obbligatorio' : null,
+                    value == null || value.isEmpty ? 'Required field' : null,
               ),
               SizedBox(height: 16),
 
               // Quante sigarette fumi al giorno?
               TextFormField(
                 decoration:
-                    InputDecoration(labelText: 'Quante sigarette fumi al giorno?'),
+                    InputDecoration(labelText: 'How many cigarettes do you smoke per day?'),
                 keyboardType: TextInputType.number,
                 onSaved: (value) =>
                     _cigarettesPerDay = int.tryParse(value ?? ''),
                 validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obbligatorio' : null,
+                    value == null || value.isEmpty ? 'Required field' : null,
               ),
               SizedBox(height: 16),
 
               // Che tipo di sigarette fumi?
 
               
-              Text('Che tipo di sigarette fumi?'),
+              Text('What type of cigarettes?'),
               Column(
   children: [
     RadioListTile<String>(
-      title: Text('Tabacco con combustione'),
-      value: 'Tabacco con combustione',
+      title: Text('Combustion tobacco'),
+      value: 'Combustion tobacco',
       groupValue: _cigaretteType,
       onChanged: (value) => setState(() => _cigaretteType = value),
     ),
     RadioListTile<String>(
-      title: Text('Tabacco riscaldato'),
-      value: 'Tabacco riscaldato',
+      title: Text('Heated tobacco'),
+      value: 'Heated tobacco',
       groupValue: _cigaretteType,
       onChanged: (value) => setState(() => _cigaretteType = value),
     ),
     RadioListTile<String>(
-      title: Text('Sigaretta elettronica'),
-      value: 'Sigaretta elettronica',
+      title: Text('Electronic cigarette'),
+      value: 'Electronic cigarette',
       groupValue: _cigaretteType,
       onChanged: (value) => setState(() => _cigaretteType = value),
     ),
@@ -123,19 +123,19 @@ class _ModuleState extends State<Module> {
               // Cosa ti ha spinto a smettere?
               TextFormField(
                 decoration:
-                    InputDecoration(labelText: 'Cosa ti ha spinto a smettere?'),
+                    InputDecoration(labelText: 'What motivates you to quit smoking?'),
                 onSaved: (value) => _motivation = value,
               ),
               SizedBox(height: 16),
 
               // Attività fisica e intensità
-              Text('Pratichi attività fisica?'),
+              Text('Do you practice physical activity?'),
               Row(
                 children: [
                   Expanded(
                     child: RadioListTile<String>(
-                      title: Text('Si'),
-                      value: 'Si',
+                      title: Text('Yes'),
+                      value: 'Yes',
                       groupValue: _exerciseIntensity,
                       onChanged: (value) => setState(() => _exerciseIntensity = value),
                     ),
@@ -169,7 +169,7 @@ class _ModuleState extends State<Module> {
                   }                         
                     // Puoi mostrare un messaggio di successo o navigare altrove
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Modulo inviato con successo!')),
+                      SnackBar(content: Text('Form submitted successfully!')),
                     );
                     Navigator.push(
                       context,
@@ -179,7 +179,7 @@ class _ModuleState extends State<Module> {
                     );
                   }
                 ,
-                child: Text('Invia'),
+                child: Text('Send'),
               ),
             ],
           ),

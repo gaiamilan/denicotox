@@ -18,16 +18,16 @@ class _CigarettePageState extends State<CigarettePage> {
   Map<String, dynamic> _datiSigarette = {}; //salva i dati delle siga negli ultimi 7 giorni
 
   final List<String> _frasi = [
-    'Smettere di fumare oggi è il primo passo verso un domani più sano.',
-    'Ogni giorno senza sigarette è una vittoria per il tuo corpo e la tua mente.',
-    'Non lasciare che una sigaretta controlli la tua vita: tu sei più forte.',
-    'Il vero coraggio è dire no al fumo e sì a te stesso.',
-    'La tua salute è il tuo bene più prezioso, proteggila scegliendo di smettere.',
-    'Respira libertà, smetti di fumare.',
-    'Ogni sigaretta che non accendi è un dono che fai ai tuoi polmoni.',
-    'La vita è troppo bella per sprecarla con il fumo.',
-    'Smettere di fumare è un viaggio, non una destinazione. Fai un passo alla volta.',
-    'Se puoi immaginarlo, puoi farlo: smetti di fumare e vivi al meglio.',
+    "Quitting smoking today is the first step towards a healthier tomorrow.",
+"Every day without cigarettes is a victory for your body and mind.",
+"Don't let a cigarette control your life: you are stronger.",
+"True courage is saying no to smoking and yes to yourself.",
+"Your health is your most precious asset; protect it by choosing to quit.",
+"Breathe freedom, quit smoking.",
+"Every cigarette you don't light is a gift you give your lungs.",
+"Life is too beautiful to waste it on smoking.",
+"Quitting smoking is a journey, not a destination. Take it one step at a time.",
+"If you can imagine it, you can do it: quit smoking and live your best life."
   ];
 
   final TextEditingController _sigaretteController = TextEditingController(); //legge ciò che scrive l user nello spazio risposta
@@ -76,7 +76,7 @@ class _CigarettePageState extends State<CigarettePage> {
     final String? savedMotivation = sp.getString('motivazione');
 
     setState(() {
-      _motivation = savedMotivation ?? 'Nessuna motivazione salvata';
+      _motivation = savedMotivation ?? 'No motivation saved';
       _showSadFace = false;
     });
   }
@@ -146,7 +146,7 @@ class _CigarettePageState extends State<CigarettePage> {
 @override
 Widget build(BuildContext context) {
   return Scaffold(
-    appBar: AppBar(title: Text('Nooo...hai fumato :(')),
+    appBar: AppBar(title: Text('Nooo... you smoked :(')),
     body: Center(
       child: _showSadFace
           ? 
@@ -185,7 +185,7 @@ Widget build(BuildContext context) {
                     child: Column(
                       children: [
                         Text(
-                          'Ricordati perché stai smettendo...',
+                          'Remember why you’re quitting...',
                           style: TextStyle(fontSize: 20),
                         ),
                         SizedBox(height: 10),
@@ -201,7 +201,7 @@ Widget build(BuildContext context) {
                 
                 SizedBox(height: 50),
                 if (!_giaInseritoOggi) ...[
-                  Text('Quante sigarette hai fumato oggi?'),
+                  Text('How many cigarettes have you smoked today?'),
                   SizedBox(height: 10),
                   SizedBox(
                     width: 100,
@@ -210,7 +210,7 @@ Widget build(BuildContext context) {
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'Numero',
+                        hintText: 'Number',
                       ),
                       onChanged:(valore){
                         int numeroSigarette= int.tryParse(valore)?? 0;
@@ -227,17 +227,17 @@ Widget build(BuildContext context) {
                   SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: _salvaSigarette,
-                    child: Text('Salva'),
+                    child: Text('Save'),
                   ),
                 ] else ...[
                   Text(
-                    'Hai già registrato $_sigaretteFumate sigarette oggi.',
+                    "You've already registered $_sigaretteFumate cigarettes today.",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   )
                 ],
                 SizedBox(height: 100),
                 Text(
-                  'Andamento ultimi 7 giorni',
+                  'Trend over last 7 days',
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(
@@ -255,10 +255,10 @@ Widget build(BuildContext context) {
                               final oggi = DateTime.now().toLocal();
                               //final giorno = oggi.add(Duration(days: value.toInt()));
                               final giorno = oggi.subtract(Duration(days: 6 - value.toInt())); //i giorni sono indicizzati al contrario, indicizzo correttamente
-                              final giornoSettimana = ['L', 'Ma', 'Me', 'G', 'V', 'S','D'][giorno.weekday-1];
+                              final giornoSettimana = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa','Su'][giorno.weekday-1];
                               //giornoSettimana contiene la lettera del giorno corrispondente a giorno.
                               return Padding(
-                                padding: const EdgeInsets.only(top: 8),
+                                padding: const EdgeInsets.only(top: 5),
                                 child: Text(giornoSettimana, style: TextStyle(fontWeight: FontWeight.bold)),
                               );
                             },

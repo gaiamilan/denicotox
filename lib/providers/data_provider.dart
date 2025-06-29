@@ -99,7 +99,9 @@ class DataProvider extends ChangeNotifier {
   //Method to clear the "memory"
   void clearData() {
     stepData.clear();
-    notifyListeners();
+    heartRateData.clear();
+    restingHeartRateData.clear();
+
   }//clearData
   
 List stars = [] ;
@@ -107,7 +109,6 @@ List stars = [] ;
   //Method to use to add a star.
 void addStar(int toAdd) {
 stars.add(toAdd);
-print('?');
     //Call the notifyListeners() method to alert that something happened.
     notifyListeners();
   }//addStar

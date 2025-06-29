@@ -136,7 +136,7 @@ Future<void> clearTokens() async{
     
     //if OK parse the response, otherwise return null
     var result;
-    print('HR');
+    
     print(response.statusCode);
     if (response.statusCode == 200) {
       result = jsonDecode(response.body);

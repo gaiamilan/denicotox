@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:denicotox/screens/info.dart';
 import 'package:denicotox/screens/treedom.dart';
 import 'package:denicotox/widgets/totalstep.dart';
 import 'package:denicotox/widgets/tree.dart';
@@ -57,7 +58,7 @@ Future<void> selezionaIndiceUnico() async {
   // Converti a set di interi per semplificare il confronto
   Set<int> usati = current.map(int.parse).toSet();
   if (usati.length >= 10) {
-    print('Tutti gli indici sono già stati usati.');
+    print('All indices used.');
     return;
   }
   int randomIndex;
@@ -71,7 +72,6 @@ Future<void> selezionaIndiceUnico() async {
     'evidenziati_indices',
     usati.map((e) => e.toString()).toList(),
   );
-  print('Nuovo indice evidenziato: $randomIndex');
 }
 
 Future<void> selezionaIndiceUnicoTreedom() async {
@@ -80,7 +80,7 @@ Future<void> selezionaIndiceUnicoTreedom() async {
   // Converti a set di interi per semplificare il confronto
   Set<int> usati = current.map(int.parse).toSet();
   if (usati.length >= 10) {
-    print('Tutti gli indici sono già stati usati.');
+    print('All indices used.');
     return;
   }
   int randomIndex;
@@ -94,18 +94,18 @@ Future<void> selezionaIndiceUnicoTreedom() async {
     'evidenziati_indices_treedom',
     usati.map((e) => e.toString()).toList(),
   );
-  print('Nuovo indice evidenziato: $randomIndex');
 }
 
 
 void check( count, totalSteps ) async {
-  if (count >= 40 && totalSteps >= 16000) {
+  if (count >= 40 && totalSteps >= 15000) {
+    await Future.delayed(Duration(seconds: 1));
  selezionaIndiceUnicoTreedom();
     showDialog(
       context: context,
       builder: (BuildContext context)  {
         return AlertDialog(
-          title: Text("Complimenti! \n Hai raggiunto un traguardo! \n Hai sbloccato un albero Treedom!", 
+          title: Text("🎉 Congratulations! 🎉 \n You've reached a milestone! 🥳\n You've unlocked a Treedom tree!", 
           textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
           content: Image(image: AssetImage('assets/treedom.png'), width: 300, height: 100),
           actions: [
@@ -131,7 +131,7 @@ void check( count, totalSteps ) async {
       context: context,
       builder: (BuildContext context)  {
         return AlertDialog(
-          title: Text("Complimenti! \n Hai raggiunto un traguardo! \n Hai sbloccato un voucher!", 
+          title: Text("🎉 Congratulations! 🎉 \n You've reached a milestone! 🥳\n You've unlocked a voucher!", 
           textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
           content: Image(image: AssetImage('assets/voucher0.png')),
           actions: [
@@ -174,11 +174,8 @@ void check( count, totalSteps ) async {
             actions: [
           IconButton(
             icon: Icon(Icons.info_outline_rounded, size: 30, color: const Color.fromARGB(255, 125, 123, 123)),
-            onPressed: ()async {
-              final prefs = await SharedPreferences.getInstance();
-           prefs.setStringList('evidenziati_indices', []);
-        prefs.setStringList('evidenziati_indices_treedom', []);
-              // Action for notifications
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => InstructionsPage()));
             },
           ),], 
       ),
@@ -214,13 +211,34 @@ void check( count, totalSteps ) async {
 
               },
             ),
-            SizedBox(height: 340), 
+            ListTile(
+              title: const Text('Clinical chart'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => TreedomPage()));
+
+              },
+            ),
+             SizedBox(height: 40), 
+
+            ElevatedButton(onPressed: () async {
+            final prefs = await SharedPreferences.getInstance();
+               prefs.setStringList('evidenziati_indices', []);
+              prefs.setStringList('evidenziati_indices_treedom', []);
+              prefs.setBool('register_done', false);
+            },
+            style: ElevatedButton.styleFrom(
+              shape: StadiumBorder() ,
+            ),
+             child: Text('Debug', style: TextStyle(color: Colors.green) )),
+
+
+            SizedBox(height: 210), 
             SizedBox(
               height: 100,
               width: 40,
               child: Padding(
                 padding: EdgeInsets.all(10),
-                child: Text('By logging in, you confirm that you have read and accepted the Privacy Policy and consent to the processing of your personal data in accordance with Articles 6 and 7 of the GDPR.', 
+                child: Text('By logging in, you confirm that you have accepted the Privacy Policy and consent to the processing of your personal data in accordance with Articles 6 and 7 of the GDPR.', 
                 style: TextStyle(fontSize: 12, color: Colors.black54)),
               ),
             ),

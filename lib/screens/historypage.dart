@@ -27,7 +27,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Future<void> _loadEvidenziatiIndices() async {
     final prefs = await SharedPreferences.getInstance();
     final indicesStringList = prefs.getStringList('evidenziati_indices') ?? [];
-    print("Loaded indices: $indicesStringList");
+    //print("Loaded indices: $indicesStringList");
 
     setState(() {
       evidenziatiIndices =

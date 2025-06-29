@@ -11,9 +11,9 @@ List<double> restingHR= [];
 
 for (var r in restingHeartRateData) {
   restingHR.add(r.value);
-  print(restingHR);
+  //print(restingHR);
 }
-print('Resting HR: $restingHR');  
+//print('Resting HR: $restingHR');  
 // Calcolo degli intervalli RR in millisecondi
 List<int> rrIntervals = bpmToRRIntervals(valueHR);
 
@@ -28,12 +28,9 @@ double rmssd = calculateRMSSD(rrIntervals);
 
 // Calcolo livello di stress combinato (0 = rilassato, 1 = stressato)
 double stressScore = calculateStressScore(sdnn, rmssd, restingHR[0].toDouble())*100;
-print('Livello di stress (0-100): ${stressScore.toStringAsFixed(0)}');
+//print('Livello di stress (0-100): ${stressScore.toStringAsFixed(0)}');
 //tostringAsFixed(0) usa 0 cifre decimali
 
-// Interpretazione qualitativa
-String interpretation = interpretStressScore(stressScore);
-print('Interpretazione: $interpretation');
 
 return stressScore;
 }
@@ -77,10 +74,3 @@ double normalizedRHR = ((rhr - 50).clamp(0, 40)) / 40; // più alto RHR = più s
 return ((normalizedHRV + normalizedRHR) / 2).clamp(0.0, 1.0);
 }
 
-/// Fornisce una interpretazione qualitativa combinando SDNN e RHR
-String interpretStressScore(double score) {
-  if (score < 20) return "Molto rilassato";
-  if (score < 40) return "Rilassato";
-  if (score < 70) return "Stressato";
-  return "Altamente stressato";
-}

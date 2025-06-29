@@ -1,6 +1,8 @@
+import 'package:denicotox/providers/data_provider.dart';
 import 'package:flutter/material.dart';
 //import 'package:group_project/screens/homePage.dart'; 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 //import 'package:group_project/screens/module.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:denicotox/screens/loginPage.dart';
@@ -58,6 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
             CircleAvatar(
               foregroundImage: AssetImage('assets/profile_image.PNG'),
               radius: 80,
+              backgroundColor: const Color.fromARGB(55, 86, 195, 90),
             ),
 
             SizedBox(
@@ -67,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox (
               width: 350,
               child: Text(
-                'Nome: ${data['nome']}',
+                'Name: ${data['nome']}',
                 style:TextStyle( 
                   fontSize: 16
                 ), 
@@ -81,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox (
               width: 350,
               child: Text(
-                'Sesso: ${data['sesso']}',
+                'Gender: ${data['sesso']}',
                 style:TextStyle( 
                   fontSize: 16
                 ), 
@@ -95,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
              SizedBox (
               width: 350,
               child: Text(
-                'Età: ${data['eta']}',
+                'Age: ${data['eta']}',
                 style:TextStyle( 
                   fontSize: 16
                 ), 
@@ -109,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox (
               width: 350,
               child: Text(
-                'Sigarette fumate al giorno: ${data['nr_sigarette']}',
+                'Cigarettes smoked per day: ${data['nr_sigarette']}',
                 style:TextStyle( 
                   fontSize: 16
                 ), 
@@ -123,7 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox (
               width: 350,
               child: Text(
-                'Di che tipo: ${data['cig']}',
+                'Type: ${data['cig']}',
                 style:TextStyle( 
                   fontSize: 16
                 ), 
@@ -137,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox (
               width: 350,
               child: Text(
-                'Perché vuoi smettere di fumare: ${data['motivation']}',
+                'Motivation to quit smoking: ${data['motivation']}',
                 style:TextStyle( 
                   fontSize: 16
                 ), 
@@ -151,7 +154,7 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox (
               width: 350,
               child: Text(
-                'Svolgi attività fisica: ${data['attivita']}',
+                'Physical activity: ${data['attivita']}',
                 style:TextStyle( 
                   fontSize: 16
                 ), 
@@ -181,9 +184,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 },),
 
               ElevatedButton(
-              child: Text('Logout'), 
+              child: Text('Logout', style: TextStyle(
+                color: Colors.green,
+              )), 
               onPressed: () async{
+                final provider = Provider.of<DataProvider>(context, listen: false);
+                provider.clearData();
                 await impact.clearTokens();
+
                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (Route<dynamic> route) => false,);
                 //Navigator.pop(context);
               }, //metodo onPressed
