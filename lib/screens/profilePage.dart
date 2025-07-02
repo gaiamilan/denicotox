@@ -1,4 +1,5 @@
 import 'package:denicotox/providers/data_provider.dart';
+import 'package:denicotox/screens/modifypage.dart';
 import 'package:flutter/material.dart';
 //import 'package:group_project/screens/homePage.dart'; 
 import 'package:google_fonts/google_fonts.dart';
@@ -180,6 +181,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     )
                 ),
                 onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ModifyPage()));
 
                 },),
 

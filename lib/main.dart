@@ -9,7 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.openBox<int>('counter'); // crea/apre il box
+  await Hive.openBox<int>('counter'); // create and open box
 
 
   runApp(MyApp());
@@ -18,7 +18,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<DataProvider>(
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       
       child: MaterialApp(
         
-        //This specifies the entrypoint
+     
         home: 
         
         Splash(),

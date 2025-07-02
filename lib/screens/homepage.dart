@@ -1,7 +1,7 @@
 
 import 'dart:math';
 
-import 'package:denicotox/screens/info.dart';
+import 'package:denicotox/screens/instructionpage.dart';
 import 'package:denicotox/screens/treedom.dart';
 import 'package:denicotox/widgets/totalstep.dart';
 import 'package:denicotox/widgets/tree.dart';
@@ -31,18 +31,13 @@ class _HomepageState extends State<Homepage> {
   // This widget is the root of your application.
   Map data = {};
 
-  Future<void> dataExtraction() async {
-    final sp = await SharedPreferences.getInstance();
-    final nome = sp.getString('nome');
-    setState(() {
-      data['nome'] = nome;
-    });
-  }
+
+ 
 
 @override
-  void initState() {
+  void initState()  {
     super.initState();
-    dataExtraction(); // Chiama la funzione al momento giusto
+    //dataExtraction(); // Chiama la funzione al momento giusto
     counterBox = Hive.box<int>('counter'); 
 
   }
@@ -154,7 +149,10 @@ void check( count, totalSteps ) async {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text( 'Hello ${data['nome'] } !', style: TextStyle(fontSize: 30)),
+        title: 
+        Consumer<DataProvider> (builder: (context, dataProv, child) {
+          return Text('Hello ${dataProv.nome} !', style: TextStyle(fontSize: 30));
+       }),
         toolbarHeight: 80,
         backgroundColor: Colors.transparent,
         elevation: 0,

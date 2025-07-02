@@ -1,5 +1,7 @@
+import 'package:denicotox/providers/data_provider.dart';
 import 'package:denicotox/screens/loginPage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:denicotox/screens/homepage.dart';
 
@@ -171,6 +173,10 @@ class _ModuleState extends State<Module> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Form submitted successfully!')),
                     );
+                    final userProvider = Provider.of<DataProvider>(context, listen: false);
+                    if (_name != null) {
+                      userProvider.setNome(_name!);
+                    }
                     Navigator.push(
                       context,
                       MaterialPageRoute(

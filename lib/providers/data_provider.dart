@@ -3,6 +3,7 @@ import 'package:denicotox/models/heartratedata.dart';
 import 'package:denicotox/models/stepdata.dart'; 
 import 'package:denicotox/models/restingheartrate.dart';
 import 'package:denicotox/services/impact.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class DataProvider extends ChangeNotifier {
@@ -126,6 +127,36 @@ void update(){
     notifyListeners();
   }//deleteStar
   
+
+
+// MODIFICHEEEEEEE
+String _nome = "";
+
+  String get nome => _nome;
+
+  Future<void> loadNome() async {
+    final prefs = await SharedPreferences.getInstance();
+    _nome = prefs.getString('nome') ?? "";
+    notifyListeners();
+  }
+
+  Future<void> setNome(String nome) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('nome', nome);
+    _nome = nome;
+    notifyListeners();
+  }
+
+
+
+
+
+
+
+
+
+
+
 
 }
 

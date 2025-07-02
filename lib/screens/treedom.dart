@@ -44,7 +44,7 @@ class _TreedomPageState extends State<TreedomPage> {
       body: Consumer<DataProvider>(
         builder: (context, dataProvider, child) {
           if (evidenziatiIndices.isEmpty) {
-            return const Center(child: Text("Nessun voucher sbloccato ancora."));
+            return const Center(child: Text("No voucher unlocked yet."));
           }
 
           // Rimuove duplicati, ordina per mantenere ordine visivo
