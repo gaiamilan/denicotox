@@ -49,8 +49,8 @@ class _LoginPageState extends State<LoginPage> {
           ));
       } else {
         final provider = Provider.of<DataProvider>(context, listen: false);
-        DateTime currentDate = DateTime.now().subtract(Duration(days: 7));
-        await provider.getDataOfDay(currentDate);
+        DateTime currentDate = DateTime.now().subtract(Duration(days: 1));
+        await provider.getDataOfDay(currentDate);  
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Homepage()),

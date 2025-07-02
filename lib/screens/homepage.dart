@@ -28,18 +28,24 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   late Box<int> counterBox; //DATABASE
 
-  // This widget is the root of your application.
-  Map data = {};
 
+Future<void> dataExtraction() async {
+    final sp = await SharedPreferences.getInstance();
+    String? name = sp.getString('nome');
+    Provider.of<DataProvider>(context, listen: false).setNome(name!);
+  }
 
- 
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
 @override
   void initState()  {
     super.initState();
     //dataExtraction(); // Chiama la funzione al momento giusto
     counterBox = Hive.box<int>('counter'); 
-
+  dataExtraction();
   }
 //RESET COUNTER OF DATABASE
 void _resetCounter() {
@@ -150,6 +156,7 @@ void check( count, totalSteps ) async {
     return Scaffold(
       appBar: AppBar(
         title: 
+
         Consumer<DataProvider> (builder: (context, dataProv, child) {
           return Text('Hello ${dataProv.nome} !', style: TextStyle(fontSize: 30));
        }),
@@ -212,7 +219,6 @@ void check( count, totalSteps ) async {
             ListTile(
               title: const Text('Clinical chart'),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => TreedomPage()));
 
               },
             ),

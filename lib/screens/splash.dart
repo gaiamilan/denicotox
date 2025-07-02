@@ -39,7 +39,7 @@ class Splash extends StatelessWidget {
   //Method for navigation SplashPage -> ExposurePage
   Future<void> _toHomePage(BuildContext context) async {
       final provider = Provider.of<DataProvider>(context, listen: false);
-      DateTime currentDate = DateTime.now().subtract(Duration(days: 7));
+      DateTime currentDate = DateTime.now().subtract(Duration(days: 1));
       await provider.getDataOfDay(currentDate);
   
 
